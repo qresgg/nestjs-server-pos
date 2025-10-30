@@ -5,6 +5,7 @@ import {CreateAuthDto} from './dto/create-auth.dto';
 import {UpdateAuthDto} from './dto/update-auth.dto';
 import {AuthDto} from "./dto/auth.dto";
 import express from 'express';
+import {buildOriginEmployee} from "./utils/repsonseTemplates";
 
 interface AuthRequest extends Request {
     user: {
@@ -32,8 +33,8 @@ export class AuthController {
             sameSite: "strict",
             maxAge: 15*60*60*1000
         });
-        res.json({
-            employee: result.employee,
+        res.status(200).json({
+            employee: buildOriginEmployee(result.employee),
             tokens: {
                 accessToken: result.accessToken,
                 refreshToken: result.refreshToken
