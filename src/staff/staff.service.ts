@@ -9,22 +9,25 @@ import { Staff } from "./entities/staff.entity";
 export class StaffService {
     constructor(@InjectRepository(Staff) private readonly staffRepository: Repository<Staff>,) {}
 
-  create(createStaffDto: CreateStaffDto) {
+    create(createStaffDto: CreateStaffDto) {
         return 'This action adds a new staff';
-  }
+    }
 
-  findAll() {
+    findAll() {
         return this.staffRepository.find();
-  }
+    }
 
-  findOne(id: string) {
-      return this.staffRepository.findOneBy({ id });
-  }
+    async findOne(id: string) {
+      return this.staffRepository.findOne({ where: { id }});
+    }
 
     async findByCode(code: string){
         return this.staffRepository.findOne({ where: { code } });
     }
 
+    async findById(id: string) {
+        return this.staffRepository.findOne({ where: { id } });
+    }
 
     async update(id: string, data: Partial<Staff>) {
         await this.staffRepository.update({ id }, data);
